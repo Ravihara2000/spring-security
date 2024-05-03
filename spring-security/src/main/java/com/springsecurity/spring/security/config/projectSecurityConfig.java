@@ -19,7 +19,8 @@ public class projectSecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/account/my-account", "/api/v1/loan/my-loan").authenticated()
+                .antMatchers("/api/v1/account/my-account").hasAnyAuthority("admin")
+                .antMatchers( "/api/v1/loan/my-loan").hasAnyAuthority("user")
                 .antMatchers("/api/v1/notice/my-notice", "/api/v1/user/register").permitAll()
                 .and()
                 .formLogin() // Enable form-based authentication

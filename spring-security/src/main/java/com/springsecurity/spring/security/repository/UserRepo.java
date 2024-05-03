@@ -25,5 +25,12 @@ public interface UserRepo extends JpaRepository<User,Integer> {
         "password": "anotherpassword",
         "role": "user"
         }
+        {
+  "id": 987,
+  "email": "user11@gmail.com",
+  "password": "0000",
+  "role": "user"
+}
 */
+
 
