@@ -18,6 +18,8 @@ public class LoginController {
 
     @Autowired
     private UserRepo userRepo;
+
+
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user){
         ResponseEntity response =null;
@@ -34,7 +36,7 @@ public class LoginController {
         }catch (Exception e){
             response =ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body("An Exception occured due to "+e.getMessage());
+                    .body("An Exception occur due to "+e.getMessage());
         }
         return response;
     }

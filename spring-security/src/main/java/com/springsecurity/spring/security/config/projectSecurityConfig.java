@@ -1,5 +1,6 @@
 package com.springsecurity.spring.security.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,11 +16,15 @@ import org.springframework.security.web.SecurityFilterChain;
 public class projectSecurityConfig {
     //match the path which should secure and not
     @Bean
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception{
-        http.authorizeHttpRequests()
-                .antMatchers("/api/v1/account/my-account","/api/v1/loan/my-loan").authenticated()
-                .antMatchers("/api/v1/notice/my-notice").permitAll()
-                .and().formLogin().and().httpBasic();
+    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/v1/account/my-account", "/api/v1/loan/my-loan").authenticated()
+                .antMatchers("/api/v1/notice/my-notice", "/api/v1/user/register").permitAll()
+                .and()
+                .formLogin() // Enable form-based authentication
+                .and()
+                .httpBasic(); // Enable Basic Authentication
 
         return http.build();
     }
@@ -36,7 +41,9 @@ public class projectSecurityConfig {
     }*/
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }
