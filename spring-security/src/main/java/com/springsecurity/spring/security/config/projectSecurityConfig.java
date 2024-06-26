@@ -15,15 +15,18 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableGlobalMethodSecurity
+@EnableGlobalMethodSecurity(
+        prePostEnabled = true,
+        securedEnabled = true
+)
 public class projectSecurityConfig {
     //match the path which should secure and not
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/account/my-account").hasAnyAuthority("admin")//.hasRole also can use-->.hasRole("ADMIN")
-                .antMatchers( "/api/v1/loan/my-loan").hasAnyAuthority("user")
+                .antMatchers("/api/v1/account/my-account").authenticated()//.hasRole also can use-->.hasRole("ADMIN")
+                .antMatchers( "/api/v1/loan/my-loan").authenticated()
                 .antMatchers("/api/v1/notice/my-notice", "/api/v1/user/register").permitAll()
                 .and()
                 .formLogin() // Enable form-based authentication

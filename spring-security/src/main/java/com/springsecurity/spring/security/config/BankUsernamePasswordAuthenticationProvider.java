@@ -31,6 +31,7 @@ public class BankUsernamePasswordAuthenticationProvider implements Authenticatio
         String userName = authentication.getName();
         String pwd = authentication.getCredentials().toString();
 
+        //check whether user already in system
         List<User> users=userRepo.findByEmail(userName);
         if(users.size()>0){
             if (passwordEncoder.matches(pwd,users.get(0).getPassword())) {
