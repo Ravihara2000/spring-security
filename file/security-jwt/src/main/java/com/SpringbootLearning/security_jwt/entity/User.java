@@ -4,12 +4,11 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
-@Getter
-@Setter
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "User")
 public class User {
     @Id
     private String userName;
