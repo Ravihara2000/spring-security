@@ -5,6 +5,7 @@ import com.SpringbootLearning.security_jwt.entity.User;
 import com.SpringbootLearning.security_jwt.repository.RoleRepo;
 import com.SpringbootLearning.security_jwt.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -18,6 +19,9 @@ public class UserService {
 
     @Autowired
     private RoleRepo roleRepo;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public User RegisterNewUser(User user) {
         return userRepo.save(user);
@@ -41,7 +45,7 @@ public class UserService {
         if(!userRepo.existsById("Admin123")) {
             User user = new User();
             user.setUserName("Admin123");
-            user.setUserPassword("Admin@123");
+            user.setUserPassword(getEncodedPassword("Admin@123"));
             user.setUserFirstName("Ravi");
             user.setUserLastname("silva");
 
@@ -55,7 +59,7 @@ public class UserService {
         if(!userRepo.existsById("User123")) {
             User user = new User();
             user.setUserName("User123");
-            user.setUserPassword("User@123");
+            user.setUserPassword(getEncodedPassword("User@123"));
             user.setUserFirstName("janudi");
             user.setUserLastname("kule");
 
@@ -66,5 +70,9 @@ public class UserService {
             userRepo.save(user);
         }
 
+    }
+
+    public String getEncodedPassword(String password){
+        return passwordEncoder.encode(password);
     }
 }
